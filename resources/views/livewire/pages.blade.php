@@ -4,6 +4,27 @@
             {{ __('Create') }}
         </x-jet-button>
     </div>
+
+        {{-- Data Table --}}
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Link</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Content</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td class="px-6 py-4 text-sm whitespace-no-wrap">dummy title</td>
+                    <td class="px-6 py-4 text-sm whitespace-no-wrap">dummy link</td>
+                    <td class="px-6 py-4 text-sm whitespace-no-wrap">dummy content</td>
+                    <td class="px-6 py-4 text-right text-sm">dummy actions</td>
+                </tr>
+            </tbody>
+        </table>
+    
         {{-- Modal Form --}}
         <x-jet-dialog-modal wire:model="modalFormVisible">
             <x-slot name="title">
