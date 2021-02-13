@@ -8,11 +8,10 @@ use Livewire\Component;
 
 class Pages extends Component
 {       
-        public $modalFormVisible = true;
+        public $modalFormVisible = false;
         public $slug;
         public $title;
         public $content;
-
         
     /**
      * Validation rules
@@ -28,7 +27,6 @@ class Pages extends Component
         ];
     }
 
-    
     /**
      * Runs everytime if the title
      * variable is being updated
@@ -54,6 +52,13 @@ class Pages extends Component
         $this->modalFormVisible = false;
         $this->resetVars();
     }
+
+    public function read()
+    {
+        return Page::paginate(5);
+    }
+
+
         
     /**
      * ctrl + shift i shortcut comment on function
@@ -114,6 +119,8 @@ class Pages extends Component
      */
     public function render()
     {
-        return view('livewire.pages');
+        return view('livewire.pages', [
+            'data' => $this->read(),
+        ]);
     }
 }
