@@ -5,10 +5,14 @@ namespace App\Http\Livewire;
 use App\Models\Page;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Pages extends Component
 {       
+        use WithPagination;
         public $modalFormVisible = false;
+        public $modalConfirmDeleteVisible =false;
+        public $modelId;
         public $slug;
         public $title;
         public $content;
@@ -22,9 +26,20 @@ class Pages extends Component
     {
         return [
             'title' => 'required',
-            'slug' => ['required', Rule::unique('pages', 'slug')],
+            'slug' => ['required', Rule::unique('pages', 'slug')->ignore($this->modelId)],
             'content' => 'required',
         ];
+    }
+    
+    /**
+     * Livewire mount function
+     *
+     * @return void
+     */
+    public function mount()
+    {
+        //Resets the Pagination after reloading the page
+        $this->resetPage();
     }
 
     /**
@@ -57,7 +72,30 @@ class Pages extends Component
     {
         return Page::paginate(5);
     }
-
+    
+    /**
+     * Update function
+     *
+     * @return void
+     */
+    public function update()
+    {
+        $this->validate();
+        Page::find($this->modelId)->update($this->modelData());
+        $this->modalFormVisible = false;
+    }
+    
+    /**
+     * Delete function
+     *
+     * @return void
+     */
+    public function delete()
+    {
+        Page::destroy($this->modelId);
+        $this->modalConfirmDeleteVisible = false;
+        $this->resetPage();
+    }
 
         
     /**
@@ -68,7 +106,50 @@ class Pages extends Component
      */
     public function createShowModal()
     {
+        $this->resetValidation();
+        $this->resetVars();
         $this->modalFormVisible = true;
+    }
+    
+    /**
+     * Shows form modal in update mode
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function updateShowModal($id)
+    {
+        $this->resetValidation();
+        $this->resetVars();
+        $this->modelId = $id;
+        $this->modalFormVisible = true;
+        $this->loadModel();
+    }
+        
+    /**
+     * Shows the delete confirmation modal.
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function deleteShowModal($id)
+    {
+        $this->modelId = $id;
+        $this->modalConfirmDeleteVisible = true;
+    }
+
+
+    /**
+     * Loads model data of this component
+     *
+     * @return void
+     */
+    public function loadModel()
+    {
+        $data = Page::find($this->modelId);
+        $this ->title = $data->title;
+        $this ->slug = $data->slug;
+        $this ->content = $data->content;
     }
         
     /**
@@ -93,6 +174,7 @@ class Pages extends Component
      */
     public function resetVars()
     {
+        $this->modelId = null;
         $this->title = null;
         $this->slug = null;
         $this->content = null;
