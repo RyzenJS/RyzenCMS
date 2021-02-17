@@ -97,7 +97,6 @@ class Pages extends Component
         $this->resetPage();
     }
 
-        
     /**
      * ctrl + shift i shortcut comment on function
      * Shows the form modal
@@ -138,7 +137,6 @@ class Pages extends Component
         $this->modalConfirmDeleteVisible = true;
     }
 
-
     /**
      * Loads model data of this component
      *
@@ -165,7 +163,6 @@ class Pages extends Component
             'content' => $this->content,
         ];
     }
-
     
     /**
      * Resets variables to null
@@ -193,7 +190,6 @@ class Pages extends Component
         $this->slug = $process2;
     }
 
-     
     /**
      * live wire render function
      *
