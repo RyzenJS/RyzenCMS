@@ -120,6 +120,10 @@
 
         {{-- The Delete Modal --}}
         <x-jet-dialog-modal wire:model="modalConfirmDeleteVisible">
+            <x-slot name="anotherContent">
+                Anything you put here will be displayed inside the modal.
+            </x-slot>
+
             <x-slot name="title">
                 {{ __('Delete Page') }}
             </x-slot>
